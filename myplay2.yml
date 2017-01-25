@@ -1,0 +1,13 @@
+---
+- name: gather no arp table on unix localhost
+  hosts: all
+  gather_facts: no
+  tasks:
+  - raw: "arp -a"
+    when: "'islocal' in group_names"
+    register: show
+  - debug: var=vars
+  - raw: "show ip arp vrf management"
+    when: "'ciscoios' in group_names"
+    register: show
+  - debug: var=vars
